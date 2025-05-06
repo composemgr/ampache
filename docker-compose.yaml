@@ -1,0 +1,23 @@
+name: ampache
+services:
+  ampache:
+    image: ampache/ampache:latest
+    container_name: ampache
+    hostname: ampache
+    restart: always
+    pull_policy: always
+    environment:
+      DISABLE_INOTIFYWAIT_CLEAN: ${DISABLE_INOTIFYWAIT_CLEAN-0}
+    ports:
+      - '172.17.0.1:59099:80'
+    volumes:
+      - /mnt/Music:/media
+      - /var/lib/srv/$USER/docker/ampache/ampache/latest/rootfs/config/ampache:/var/www/config
+      - /var/lib/srv/$USER/docker/ampache/ampache/latest/rootfs/data/db/mysql:/var/lib/mysql
+    networks:
+      - ampache
+
+networks:
+  ampache:
+    name: ampache
+    external: false
