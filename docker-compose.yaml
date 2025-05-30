@@ -11,7 +11,7 @@ services:
   ampache:
     image: ampache/ampache:latest
     container_name: ampache
-    hostname: ampache
+    hostname: ${BASE_HOST_NAME:-$HOSTNAME}
     restart: always
     pull_policy: always
     logging: *default-logging
@@ -21,9 +21,9 @@ services:
     ports:
       - '172.17.0.1:59099:80'
     volumes:
-      - /mnt/Music:/media
-      - /var/lib/srv/$USER/docker/db/mysql/ampache:/var/lib/mysql
-      - /var/lib/srv/$USER/docker/ampache/ampache/latest/rootfs/config/ampache:/var/www/config
+      - '/mnt/Music:/media'
+      - '/var/lib/srv/$USER/databases/mysql/ampache:/var/lib/mysql'
+      - '/var/lib/srv/$USER/docker/ampache/rootfs/config/ampache:/var/www/config'
     networks:
       - ampache
 
