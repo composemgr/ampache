@@ -1,0 +1,33 @@
+# nginx proxy address - http://172.17.0.1:59099
+
+name: ampache
+x-logging: &default-logging
+  options:
+    max-size: '5m'
+    max-file: '1'
+  driver: json-file
+
+services:
+  app:
+    image: ampache/ampache:latest
+    container_name: ampache-app
+    hostname: ${BASE_HOST_NAME:-$HOSTNAME}
+    restart: always
+    pull_policy: always
+    logging: *default-logging
+    environment:
+      TZ: ${TZ:-America/New_York}
+      DISABLE_INOTIFYWAIT_CLEAN: ${DISABLE_INOTIFYWAIT_CLEAN:-0}
+    ports:
+      - '172.17.0.1:59099:80'
+    volumes:
+      - './rootfs/data/media/music:/media'
+      - './rootfs/db/mysql/ampache:/var/lib/mysql'
+      - './rootfs/config/ampache:/var/www/config'
+    networks:
+      - ampache
+
+networks:
+  ampache:
+    name: ampache
+    external: false
