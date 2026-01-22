@@ -22,7 +22,7 @@ services:
       - '172.17.0.1:59099:80'
     volumes:
       - './rootfs/data/media/music:/media'
-      - './rootfs/db/mysql/ampache:/var/lib/mysql'
+      - './rootfs/data/db/mysql/ampache:/var/lib/mysql'
       - './rootfs/config/ampache:/var/www/config'
     networks:
       - ampache
